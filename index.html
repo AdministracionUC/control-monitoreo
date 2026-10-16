@@ -3,131 +3,72 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Monitoreo de rondas · Complejo de seguridad</title>
+<title>Monitoreo de Rondas · Complejo de Seguridad</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg: #0e1218;
-    --panel: #161b24;
-    --panel-alt: #1c2230;
-    --border: #262d3a;
-    --text-primary: #e7eaf0;
-    --text-secondary: #8992a3;
-    --text-muted: #5c6577;
-    --accent: #35c7c1;
-    --green: #34c777;
-    --green-dim: rgba(52,199,119,0.14);
-    --orange: #f2a83e;
-    --orange-dim: rgba(242,168,62,0.16);
-    --red: #e35a5a;
-    --red-dim: rgba(227,90,90,0.16);
+    --bg: #0e1218; --panel: #161b24; --panel-alt: #1c2230; --border: #262d3a;
+    --text-primary: #e7eaf0; --text-secondary: #8992a3; --text-muted: #5c6577;
+    --accent: #35c7c1; --green: #34c777; --green-dim: rgba(52,199,119,0.14);
+    --orange: #f2a83e; --orange-dim: rgba(242,168,62,0.16);
+    --red: #e35a5a; --red-dim: rgba(227,90,90,0.16);
   }
   *{box-sizing:border-box; margin:0; padding:0;}
-  body{
-    background: var(--bg);
-    color: var(--text-primary);
-    font-family: 'Inter', system-ui, sans-serif;
-    padding: 28px 20px 60px;
-    min-height: 100vh;
-  }
+  body{ background: var(--bg); color: var(--text-primary); font-family: 'Inter', sans-serif; padding: 28px 20px 60px; min-height: 100vh; }
   .wrap{ max-width: 1120px; margin: 0 auto; }
-
-  header{
-    display:flex; justify-content:space-between; align-items:flex-end;
-    flex-wrap: wrap; gap: 16px;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 18px; margin-bottom: 24px;
-  }
-  .brand-eyebrow{ color: var(--accent); font-size: 12px; letter-spacing: 0.02em; margin-bottom: 4px; }
+  header{ display:flex; justify-content:space-between; align-items:flex-end; border-bottom: 1px solid var(--border); padding-bottom: 18px; margin-bottom: 24px; flex-wrap: wrap; gap: 15px;}
+  .brand-eyebrow{ color: var(--accent); font-size: 12px; font-weight:600; margin-bottom: 4px; }
   h1{ font-size: 21px; font-weight: 600; }
   .clock{ font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 500; text-align: right; }
-  .clock small{ display:block; font-family:'Inter',sans-serif; font-size:11px; color:var(--text-secondary); font-weight:400; margin-top:2px; }
+  .clock small{ display:block; font-family:'Inter',sans-serif; font-size:11px; color:var(--text-secondary); }
+  
+  /* Agentes y Escáner Panel */
+  .top-panels { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-bottom: 24px; }
+  .agents-panel, .scanner-panel { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .panel-title { font-size: 14px; margin-bottom: 12px; color: var(--text-secondary); }
+  .agent-grid { display: flex; flex-wrap: wrap; gap: 12px; }
+  .agent-toggle { display: flex; align-items: center; gap: 6px; font-size: 12px; cursor: pointer; }
+  
+  .scanner-form { display: flex; gap: 10px; }
+  .scanner-form input { flex: 1; padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--text-primary); font-family: 'JetBrains Mono'; text-transform: uppercase; }
+  .scanner-form button { padding: 8px 16px; background: var(--accent); color: #000; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; }
+  .scanner-form button:hover { opacity: 0.9; }
 
-  .legend{ display:flex; gap:18px; flex-wrap:wrap; margin-bottom: 30px; }
-  .legend-item{ display:flex; align-items:center; gap:8px; font-size:13px; color:var(--text-secondary); }
-  .dot{ width:9px; height:9px; border-radius:50%; flex-shrink:0; }
-
-  .group-title{ font-size: 15px; font-weight:600; margin: 40px 0 6px; padding-top: 24px; border-top: 1px solid var(--border); }
-  .group-title:first-of-type{ margin-top: 0; padding-top:0; border-top:none; }
+  .group-title{ font-size: 15px; font-weight:600; margin: 30px 0 6px; padding-top: 24px; border-top: 1px solid var(--border); }
   .group-sub{ font-size: 12px; color: var(--text-muted); margin-bottom: 16px; }
-
-  section.block{ margin-bottom: 22px; }
-  .block-title{ display:flex; align-items:baseline; gap:10px; margin-bottom: 12px; flex-wrap:wrap; }
-  .block-title h3{ font-size: 13px; font-weight:600; color: var(--text-primary); }
-  .block-title span{ font-size:11px; color: var(--text-muted); font-family:'JetBrains Mono',monospace; }
-
-  .panel{
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 20px 20px 16px;
-  }
-
-  .fixed-grid{ display:flex; flex-wrap:wrap; gap:16px; }
-
+  .panel{ background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom:20px; }
+  
   .route{ display:flex; align-items:center; flex-wrap: wrap; row-gap: 18px; }
-  .route-connector{
-    flex: 0 1 40px; display:flex; align-items:center; justify-content:center; gap:4px;
-    color: var(--text-muted); font-size:10px; padding: 0 4px 26px; min-width: 36px;
-  }
-  .route-connector svg{ width:14px; height:14px; opacity:0.55; flex-shrink:0; }
-
-  .route-connector.turn{ flex-basis: 100%; padding: 6px 0 26px; color: var(--accent); }
-  .route-connector.turn svg{ opacity: 0.9; width:16px; height:16px; }
-  .route.vertical .route-connector.turn{ flex-basis: auto; padding: 4px 0; }
-
-  .route.vertical{ flex-direction: column; align-items:center; row-gap: 0; }
-  .route.vertical .route-connector{ flex-direction: row; padding: 4px 0; }
-  .route.vertical .route-connector svg{ transform: rotate(90deg); }
-  .route.vertical .route-connector.turn svg{ transform: none; }
-
-  .node{
-    width: 138px;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    background: var(--panel-alt);
-    padding: 12px 12px 10px;
-    position: relative;
-    transition: border-color .3s ease, background .3s ease;
-  }
-  .node.wide{ width: 210px; }
-  .node .pin{ position:absolute; top:10px; right:10px; width:8px; height:8px; border-radius:50%; }
-  .node .leg{ position:absolute; top:10px; left:10px; font-family:'JetBrains Mono', monospace; font-size:9px; color: var(--text-muted); letter-spacing:0.02em; }
-  .node .id{ font-family:'JetBrains Mono', monospace; font-size:10px; color: var(--text-muted); margin-bottom: 5px; margin-top: 10px; }
+  .route-connector{ flex: 0 1 40px; display:flex; align-items:center; justify-content:center; gap:4px; color: var(--text-muted); font-size:10px; padding: 0 4px; min-width: 36px; }
+  .route-connector svg{ width:14px; height:14px; opacity:0.55; }
+  
+  .node{ width: 148px; border-radius: 10px; border: 1px solid var(--border); background: var(--panel-alt); padding: 12px; position: relative; opacity: 1; transition: 0.2s;}
+  .node.inactive { opacity: 0.3; filter: grayscale(1); }
+  .node .id{ font-family:'JetBrains Mono', monospace; font-size:11px; color: var(--accent); margin-bottom: 5px; font-weight: bold;}
   .node .place{ font-size: 13px; font-weight: 600; margin-bottom: 2px; }
   .node .floor{ font-size: 11px; color: var(--text-secondary); margin-bottom: 10px; }
   .node .status-row{ display:flex; justify-content:space-between; align-items:baseline; gap:8px; }
-  .node .status-label{ font-size: 10px; font-weight:600; letter-spacing:0.01em; white-space:nowrap; }
-  .node .elapsed{ font-family:'JetBrains Mono', monospace; font-size: 11px; color: var(--text-secondary); white-space:nowrap; }
-
-  .node.state-green{ border-color: rgba(52,199,119,0.35); background: linear-gradient(180deg, var(--green-dim), var(--panel-alt) 60%); }
-  .node.state-orange{ border-color: rgba(242,168,62,0.4); background: linear-gradient(180deg, var(--orange-dim), var(--panel-alt) 60%); }
-  .node.state-red{ border-color: rgba(227,90,90,0.45); background: linear-gradient(180deg, var(--red-dim), var(--panel-alt) 60%); }
-  .state-green .pin{ background: var(--green); box-shadow: 0 0 0 4px var(--green-dim); }
-  .state-orange .pin{ background: var(--orange); box-shadow: 0 0 0 4px var(--orange-dim); }
-  .state-red .pin{ background: var(--red); box-shadow: 0 0 0 4px var(--red-dim); }
+  .node .status-label{ font-size: 10px; font-weight:600; }
+  .node .elapsed{ font-family:'JetBrains Mono', monospace; font-size: 11px; color: var(--text-secondary); }
+  
+  .state-green{ border-color: rgba(52,199,119,0.35); background: linear-gradient(180deg, var(--green-dim), var(--panel-alt) 60%); }
+  .state-orange{ border-color: rgba(242,168,62,0.4); background: linear-gradient(180deg, var(--orange-dim), var(--panel-alt) 60%); }
+  .state-red{ border-color: rgba(227,90,90,0.45); background: linear-gradient(180deg, var(--red-dim), var(--panel-alt) 60%); }
   .state-green .status-label{ color: var(--green); }
   .state-orange .status-label{ color: var(--orange); }
   .state-red .status-label{ color: var(--red); }
 
-  footer{ margin-top: 34px; font-size:12px; color: var(--text-muted); line-height:1.6; }
-
-  @media (max-width: 720px){
-    .route:not(.vertical){ flex-direction: column; }
-    .route:not(.vertical) .route-connector{ flex-direction: column; padding: 6px 0; }
-    .route:not(.vertical) .route-connector svg{ transform: rotate(90deg); }
-  }
+  @media (max-width: 768px) { .top-panels { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
 <div class="wrap">
-
   <header>
     <div>
-      <div class="brand-eyebrow">PANEL DE RONDAS · TIEMPO REAL</div>
-      <h1>Complejo Pabellón C · A · B</h1>
+      <div class="brand-eyebrow" id="shift-label">TURNO MAÑANA (7:00 AM - 12:00 PM)</div>
+      <h1>Panel Dinámico de Rondas</h1>
     </div>
     <div class="clock">
       <span id="clock">--:--:--</span>
@@ -135,208 +76,182 @@
     </div>
   </header>
 
-  <div class="legend">
-    <div class="legend-item"><span class="dot" style="background:var(--green)"></span> A tiempo — dentro del intervalo esperado</div>
-    <div class="legend-item"><span class="dot" style="background:var(--orange)"></span> Demora leve — hasta 3 min de retraso</div>
-    <div class="legend-item"><span class="dot" style="background:var(--red)"></span> Crítico — más de 3 min de retraso</div>
+  <div class="top-panels">
+    <!-- Control de Agentes en Servicio -->
+    <div class="agents-panel">
+      <div class="panel-title">Agentes Activos (Desmarcar si no están en servicio)</div>
+      <div class="agent-grid" id="agents-container"></div>
+    </div>
+    
+    <!-- Simulador de Escáner QR -->
+    <div class="scanner-panel">
+      <div class="panel-title">Ingreso QR Manual</div>
+      <form class="scanner-form" onsubmit="handleScan(event)">
+        <input type="text" id="qr-input" placeholder="Ej: PV 1" required autocomplete="off">
+        <button type="submit">Registrar</button>
+      </form>
+      <small style="color:var(--text-muted); display:block; margin-top:8px; font-size:11px;">Actualiza el "lastScan" de los puntos asignados al PV.</small>
+    </div>
   </div>
 
-  <div class="group-title">Puestos fijos</div>
-  <div class="group-sub">Personal que no se desplaza, controla el ingreso desde un punto único</div>
-  <div class="panel fixed-grid" id="fixedPosts"></div>
-
-  <div class="group-title">Perímetro exterior</div>
-  <div class="group-sub">4 puntos · ronda cerrada (cuadrado) alrededor del complejo</div>
-  <div class="panel" id="perimeter" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px;"></div>
-
-  <div class="group-title">Rondas por piso</div>
-  <div class="group-sub">Recorren varios pabellones en el mismo par de pisos — van y regresan reverificando cada punto</div>
-  <div id="floorRoutes"></div>
-
-  <div class="group-title">Rondas en torre</div>
-  <div class="group-sub">Recorren únicamente los pisos altos de un solo pabellón — suben o bajan y regresan reverificando</div>
-  <div id="towerRoutes"></div>
-
-  <footer>
-    Cada ruta es de ida y vuelta: al llegar al último punto, el personal da la vuelta y regresa por el mismo camino, reverificando cada punto en lugar de saltar directo al inicio. El intervalo esperado de cada ruta se calcula como (número de puntos − 1) × 2 × 8 min, que es el tiempo real de un ciclo completo de ida y vuelta. Los "lastScan" de esta pantalla son datos de demostración; al conectar los tags NFC, cada nodo se alimentará de la hoja "Registros_Escaneo".
-  </footer>
-
+  <div id="dashboard-content"></div>
 </div>
 
 <script>
-const ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
-const TURN  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h10a5 5 0 0 0 0-10H9M4 12l4-4M4 12l4 4"/></svg>';
-const now = Date.now();
-const min = m => now - m * 60000;
+const ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 
-// Construye un recorrido de ida y vuelta a partir de la lista de puntos de ida.
-// El último punto de "base" es el punto de retorno: se da la vuelta ahí y se
-// regresa por los mismos puntos (sin repetir el propio punto de retorno).
-function buildLoop(base, overrides){
-  overrides = overrides || {};
-  const forward = base.map(p => ({ ...p, leg: 'Ida' }));
-  const back = base.slice(0, -1).reverse().map(p => ({ ...p, leg: 'Vuelta' }));
-  const points = forward.concat(back);
-  const n = points.length;
-  const expected = (n - 1) * 8;
-  points.forEach((p, i) => {
-    const agoMin = overrides[i] !== undefined ? overrides[i] : (n - 1 - i) * 8;
-    p.lastScan = min(agoMin);
-  });
-  return { points, expected, turnIndex: forward.length - 1 };
+// Estado de Agentes (PV 1 al PV 12)
+const agents = {};
+for(let i=1; i<=12; i++) agents[`PV ${i}`] = true;
+
+// Inicializador de escaneos (Demo: Todos hace 5 minutos)
+const min = m => Date.now() - m * 60000;
+let lastScans = {}; 
+
+function renderAgents() {
+  const container = document.getElementById('agents-container');
+  container.innerHTML = Object.keys(agents).map(pv => `
+    <label class="agent-toggle">
+      <input type="checkbox" ${agents[pv] ? 'checked' : ''} onchange="agents['${pv}'] = this.checked; renderDashboard();">
+      ${pv}
+    </label>
+  `).join('');
 }
 
-// ---- Puestos fijos ----
-const fixedPosts = [
-  { id: 'FIJO-PP',  pab: 'Puerta principal',        floor: 'Puesto fijo · Control de ingreso',        lastScan: min(4),  expected: 20 },
-  { id: 'FIJO-APP', pab: 'Apoyo puerta principal',   floor: 'Puesto fijo · Control de ingreso',        lastScan: min(9),  expected: 20 },
-  { id: 'FIJO-CPP', pab: 'Costado puerta principal', floor: 'Puesto fijo · Apoyo perimetral',          lastScan: min(23), expected: 20 },
-  { id: 'FIJO-ICA', pab: 'Ingreso Pabellón C',       floor: 'Puesto fijo · Control administrativos',   lastScan: min(6),  expected: 20 },
-];
+// Simulador de escaneo: Al poner "PV 1", actualiza todos sus puntos a Date.now()
+function handleScan(e) {
+  e.preventDefault();
+  let val = document.getElementById('qr-input').value.trim().toUpperCase();
+  // Formatear si escriben "PV1" a "PV 1"
+  if(val.startsWith('PV') && val.length > 2 && val[2] !== ' ') {
+    val = `PV ${val.substring(2)}`;
+  }
+  
+  if(agents[val] !== undefined) {
+    lastScans[val] = Date.now();
+    document.getElementById('qr-input').value = '';
+    renderDashboard();
+    alert(`Ronda registrada correctamente para ${val}`);
+  } else {
+    alert("Código inválido. Usa el formato 'PV 1'.");
+  }
+}
 
-// ---- Perímetro (ya es una ronda cerrada, no necesita ida/vuelta) ----
-const perimeter = [
-  { id: 'PERIM-04', pab: 'Detrás de C',  floor: 'Perímetro', lastScan: min(3),  expected: 15 },
-  { id: 'PERIM-03', pab: 'Entre C y A',  floor: 'Perímetro', lastScan: min(17), expected: 15 },
-  { id: 'PERIM-02', pab: 'Entre A y B',  floor: 'Perímetro', lastScan: min(5),  expected: 15 },
-  { id: 'PERIM-01', pab: 'Lateral de B', floor: 'Perímetro', lastScan: min(20), expected: 15 },
-];
+// Definición de flujos por turno
+const flows = {
+  morning: [
+    { pv: 'PV 1', title: 'Garita', expected: 45, points: [{ id: 'PT-1', pab: 'Bloque A', floor: 'Garita' }] },
+    { pv: 'PV 3', title: 'Puerta Principal', expected: 45, points: [{ id: 'PT-3', pab: 'Bloque A', floor: 'Principal' }] },
+    { pv: 'PV 8', title: 'Puerta Digitar', expected: 45, points: [{ id: 'PT-8', pab: 'Bloque A', floor: 'Digitar' }] },
+    { pv: 'PV 9', title: 'Puerta C', expected: 45, points: [{ id: 'PT-9', pab: 'Bloque A', floor: 'Piso 1' }] },
+    { pv: 'PV 11', title: 'Apoyo Principal', expected: 45, points: [{ id: 'PT-11', pab: 'Bloque A', floor: 'Apoyo' }] },
+    { pv: 'PV 2', title: 'Piso 1 y 2', expected: 45, points: [{ id: 'P2-1', pab: 'Bloque B', floor: 'Piso 1' }, { id: 'P2-2', pab: 'Bloque B', floor: 'Piso 2' }] },
+    { pv: 'PV 4', title: 'Piso 3 y 4', expected: 45, points: [{ id: 'P4-1', pab: 'Bloque C', floor: 'Piso 3' }, { id: 'P4-2', pab: 'Bloque C', floor: 'Piso 4' }] },
+    { pv: 'PV 5', title: 'Piso 5 y 6', expected: 45, points: [{ id: 'P5-1', pab: 'Bloque C', floor: 'Piso 5' }, { id: 'P5-2', pab: 'Bloque C', floor: 'Piso 6' }] },
+    { pv: 'PV 6', title: 'Piso 7 y 8', expected: 40, points: [{ id: 'P6-1', pab: 'Bloque B', floor: 'Piso 7' }, { id: 'P6-2', pab: 'Bloque B', floor: 'Piso 8' }] },
+    { pv: 'PV 7', title: 'Piso 9 y 11', expected: 40, points: [{ id: 'P7-1', pab: 'Bloque B', floor: 'Piso 9' }, { id: 'P7-2', pab: 'Bloque B', floor: 'Terraza P11' }] },
+    { pv: 'PV 10', title: 'Piso 7, 9 y 11', expected: 55, points: [{ id: 'P10-1', pab: 'Bloque C', floor: 'Piso 7' }, { id: 'P10-2', pab: 'Bloque C', floor: 'Piso 9' }, { id: 'P10-3', pab: 'Bloque C', floor: 'Terraza P11' }] }
+  ],
+  lunch: [
+    { pv: 'PV 1', title: 'Garita', expected: 45, points: [{ id: 'PT-1', pab: 'Bloque A', floor: 'Garita' }] },
+    { pv: 'PV 3', title: 'Puerta Principal', expected: 45, points: [{ id: 'PT-3', pab: 'Bloque A', floor: 'Principal' }] },
+    { pv: 'PV 7', title: 'Piso 9 y 11', expected: 40, points: [{ id: 'P7-1', pab: 'Bloque B', floor: 'Piso 9' }, { id: 'P7-2', pab: 'Bloque B', floor: 'Terraza' }] },
+    { pv: 'PV 9', title: 'Puerta C', expected: 45, points: [{ id: 'PT-9', pab: 'Bloque A', floor: 'Piso 1' }] },
+    { pv: 'PV 11', title: 'Apoyo Principal', expected: 45, points: [{ id: 'PT-11', pab: 'Bloque A', floor: 'Apoyo' }] },
+    { pv: 'PV 2', title: 'Rotación Especial 1', expected: 35, points: [{ id: 'L-1', pab: 'Campus', floor: 'Piso 2' }, { id: 'L-2', pab: 'Campus', floor: 'Piso 3' }] },
+    { pv: 'PV 4', title: 'Rotación Especial 2', expected: 35, points: [{ id: 'L-3', pab: 'Campus', floor: 'Piso 5' }, { id: 'L-4', pab: 'Campus', floor: 'Piso 7' }] },
+    { pv: 'PV 5', title: 'Rotación Especial Terrazas', expected: 40, points: [{ id: 'L-5', pab: 'Bloque C', floor: 'Terraza 11' }, { id: 'L-6', pab: 'Bloque B', floor: 'Terraza 11' }] }
+  ],
+  evening: [
+    { pv: 'PV 1', title: 'Garita', expected: 45, points: [{ id: 'PT-1', pab: 'Bloque A', floor: 'Garita' }] },
+    { pv: 'PV 3', title: 'Puerta Principal', expected: 45, points: [{ id: 'PT-3', pab: 'Bloque A', floor: 'Principal' }] },
+    { pv: 'PV 2', title: 'Graderías', expected: 90, points: [{ id: 'E-1', pab: 'Bloque B', floor: 'Piso 2' }, { id: 'E-2', pab: 'Graderías', floor: 'Campus' }] },
+    { pv: 'PV 11', title: 'Terrazas y Bloque A', expected: 45, points: [{ id: 'E-3', pab: 'Bloque C', floor: 'Terraza 11' }, { id: 'E-4', pab: 'Bloque B', floor: 'Terraza 11' }, { id: 'E-5', pab: 'Bloque A', floor: 'Piso 7' }] }
+  ],
+  night: [
+    { pv: 'PV 1', title: 'Rotación 1: PV 2 y PV 1', expected: 60, points: [{ id: 'N-1', pab: 'Bloque A', floor: 'Garita' }, { id: 'N-2', pab: 'Bloque B', floor: 'Detrás' }] },
+    { pv: 'PV 2', title: 'Rotación 1: PV 2 y PV 1', expected: 60, points: [{ id: 'N-3', pab: 'Campus', floor: 'Piso 1, 2, 3' }, { id: 'N-4', pab: 'Campus', floor: 'Graderías' }] },
+    { pv: 'PV 3', title: 'Rotación 2: PV 3 y PV 11', expected: 60, points: [{ id: 'N-5', pab: 'Campus', floor: 'Piso 4, 5, 6' }] },
+    { pv: 'PV 11', title: 'Rotación 2: PV 3 y PV 11', expected: 60, points: [{ id: 'N-6', pab: 'Bloque C', floor: 'Piso 7 al 11' }] },
+    { pv: 'PV 6', title: 'Rotación 3: PV 6 y PV 8', expected: 60, points: [{ id: 'N-7', pab: 'Bloque A y B', floor: 'Piso 7 al 11' }] },
+    { pv: 'PV 8', title: 'Rotación 3: PV 6 y PV 8', expected: 60, points: [{ id: 'N-8', pab: 'Campus', floor: 'Torreón' }] }
+  ]
+};
 
-// ---- Rondas por piso (bases de ida; la vuelta se genera con buildLoop) ----
-const piso12Base = [
-  { id: 'EXT-01',  pab: 'Exterior',   floor: 'Recorrido exterior (por definir)' },
-  { id: 'C-P01-A', pab: 'Pabellón C', floor: 'Piso 1' },
-  { id: 'A-P01-A', pab: 'Pabellón A', floor: 'Piso 1' },
-  { id: 'B-P01-A', pab: 'Pabellón B', floor: 'Piso 1' },
-  { id: 'B-P02-A', pab: 'Pabellón B', floor: 'Piso 2' },
-  { id: 'A-P02-A', pab: 'Pabellón A', floor: 'Piso 2' },
-  { id: 'C-P02-A', pab: 'Pabellón C', floor: 'Piso 2' },
-];
-const piso34Base = [
-  { id: 'C-P03-A', pab: 'Pabellón C', floor: 'Piso 3' },
-  { id: 'A-P03-A', pab: 'Pabellón A', floor: 'Piso 3' },
-  { id: 'B-P03-A', pab: 'Pabellón B', floor: 'Piso 3' },
-  { id: 'B-P04-A', pab: 'Pabellón B', floor: 'Piso 4' },
-  { id: 'A-P04-A', pab: 'Pabellón A', floor: 'Piso 4' },
-  { id: 'C-P04-A', pab: 'Pabellón C', floor: 'Piso 4' },
-];
-const piso56Base = [
-  { id: 'C-P05-A', pab: 'Pabellón C', floor: 'Piso 5' },
-  { id: 'A-P05-A', pab: 'Pabellón A', floor: 'Piso 5' },
-  { id: 'B-P05-A', pab: 'Pabellón B', floor: 'Piso 5' },
-  { id: 'B-P06-A', pab: 'Pabellón B', floor: 'Piso 6' },
-  { id: 'A-P06-A', pab: 'Pabellón A', floor: 'Piso 6' },
-  { id: 'C-P06-A', pab: 'Pabellón C', floor: 'Piso 6' },
-];
-const piso78Base = [
-  { id: 'A-P07-A', pab: 'Pabellón A', floor: 'Piso 7' },
-  { id: 'B-P07-A', pab: 'Pabellón B', floor: 'Piso 7' },
-  { id: 'B-P08-A', pab: 'Pabellón B', floor: 'Piso 8' },
-  { id: 'A-P08-A', pab: 'Pabellón A', floor: 'Piso 8' },
-];
+function getActiveFlows() {
+  const d = new Date();
+  const time = d.getHours() + d.getMinutes()/60;
+  
+  let currentShift = 'morning'; 
+  let label = "TURNO MAÑANA (7:00 AM - 12:00 PM)";
 
-const floorRoutes = [
-  { title: 'Piso 1 y 2 + Exterior', subtitle: 'Ida: Exterior → C → A → B → B → A → C · da la vuelta y regresa',
-    ...buildLoop(piso12Base, { 0: 100, 1: 92 }) },
-  { title: 'Piso 3 y 4', subtitle: 'Ida: C → A → B → B → A → C · da la vuelta y regresa',
-    ...buildLoop(piso34Base, { 0: 84 }) },
-  { title: 'Piso 5 y 6', subtitle: 'Ida: C → A → B → B → A → C · da la vuelta y regresa',
-    ...buildLoop(piso56Base) },
-  { title: 'Piso 7 y 8 (solo A y B)', subtitle: 'Ida: A → B → B → A · da la vuelta y regresa',
-    ...buildLoop(piso78Base, { 0: 52 }) },
-];
+  if(time >= 12 && time < 13.5) { currentShift = 'lunch'; label = "TURNO ALMUERZO (12:01 PM - 1:30 PM)"; }
+  else if(time >= 18.5 && time < 23) { currentShift = 'evening'; label = "TURNO NOCHE (6:30 PM - 10:30 PM)"; }
+  else if(time >= 23 || time < 6) { currentShift = 'night'; label = "TURNO MADRUGADA (11:00 PM - 6:00 AM)"; }
+  
+  document.getElementById('shift-label').innerText = label;
+  return flows[currentShift];
+}
 
-// ---- Rondas en torre (bases de ida; la vuelta se genera con buildLoop) ----
-const torreCBase = [
-  { id: 'C-P11-A', pab: 'Pabellón C', floor: 'Piso 11 · Terraza' },
-  { id: 'C-P10-A', pab: 'Pabellón C', floor: 'Piso 10' },
-  { id: 'C-P09-A', pab: 'Pabellón C', floor: 'Piso 9' },
-  { id: 'C-P08-A', pab: 'Pabellón C', floor: 'Piso 8' },
-  { id: 'C-P07-A', pab: 'Pabellón C', floor: 'Piso 7' },
-];
-const torreBBase = [
-  { id: 'B-P11-A', pab: 'Pabellón B', floor: 'Piso 11 · Terraza' },
-  { id: 'B-P10-A', pab: 'Pabellón B', floor: 'Piso 10' },
-  { id: 'B-P09-A', pab: 'Pabellón B', floor: 'Piso 9' },
-];
-
-const towerRoutes = [
-  { title: 'Torre Pabellón C', subtitle: 'Baja de piso 11 a piso 7 · da la vuelta y sube reverificando',
-    ...buildLoop(torreCBase, { 0: 70, 3: 46 }) },
-  { title: 'Torre Pabellón B', subtitle: 'Baja de piso 11 a piso 9 · da la vuelta y sube reverificando',
-    ...buildLoop(torreBBase, { 0: 36 }) },
-];
-
-function status(point, expected){
-  const elapsedMin = (Date.now() - point.lastScan) / 60000;
+function getNodeStatus(lastScanTime, expected, pvActive) {
+  if(!pvActive) return { cls: 'inactive', label: 'Sin servicio', elapsedMin: 0 };
+  
+  // Si nunca se ha escaneado en esta sesión, simulamos que fue hace 5 mins para demostración
+  const scanTime = lastScanTime || min(5);
+  const elapsedMin = (Date.now() - scanTime) / 60000;
+  
   if (elapsedMin <= expected) return { cls: 'state-green', label: 'A tiempo', elapsedMin };
-  if (elapsedMin <= expected + 3) return { cls: 'state-orange', label: 'Demora leve', elapsedMin };
+  if (elapsedMin <= expected + 5) return { cls: 'state-orange', label: 'Demora leve', elapsedMin };
   return { cls: 'state-red', label: 'Crítico', elapsedMin };
 }
 
-function nodeHTML(point, expected, wide){
-  const s = status(point, expected);
-  const mins = Math.floor(s.elapsedMin);
-  const legTag = point.leg ? `<div class="leg">${point.leg}</div>` : '';
-  return `
-    <div class="node ${wide ? 'wide' : ''} ${s.cls}" data-id="${point.id}">
-      <div class="pin"></div>
-      ${legTag}
-      <div class="id">${point.id}</div>
-      <div class="place">${point.pab}</div>
-      <div class="floor">${point.floor}</div>
-      <div class="status-row">
-        <span class="status-label">${s.label}</span>
-        <span class="elapsed">hace ${mins} min</span>
-      </div>
-    </div>`;
-}
+function renderDashboard() {
+  const activeFlows = getActiveFlows();
+  let html = '';
 
-function renderFixedPosts(){
-  document.getElementById('fixedPosts').innerHTML =
-    fixedPosts.map(p => nodeHTML(p, p.expected, true)).join('');
-}
+  activeFlows.forEach(flow => {
+    const isPvActive = agents[flow.pv];
+    const currentLastScan = lastScans[flow.pv]; // Obtenemos el tiempo del último escaneo para este PV
+    
+    let routeHtml = flow.points.map((p, i) => {
+      const s = getNodeStatus(currentLastScan, flow.expected, isPvActive);
+      const mins = Math.floor(s.elapsedMin);
+      
+      const node = `
+        <div class="node ${s.cls}">
+          <div class="id">${flow.pv} · ${p.id}</div>
+          <div class="place">${p.pab}</div>
+          <div class="floor">${p.floor}</div>
+          <div class="status-row">
+            <span class="status-label">${s.label}</span>
+            <span class="elapsed">${isPvActive ? `hace ${mins} min` : '-'}</span>
+          </div>
+        </div>`;
+      
+      const connector = (i < flow.points.length - 1) ? `<div class="route-connector">${ARROW}</div>` : '';
+      return `<div style="display:flex; align-items:center;">${node}${connector}</div>`;
+    }).join('');
 
-function renderPerimeter(){
-  document.getElementById('perimeter').innerHTML =
-    perimeter.map(p => nodeHTML(p, p.expected)).join('');
-}
+    html += `
+      <div class="group-title">${flow.title} (${flow.pv}) ${!isPvActive ? ' - <span style="color:var(--red);">INACTIVO</span>' : ''}</div>
+      <div class="group-sub">Tiempo máximo de ronda: ${flow.expected} min</div>
+      <div class="panel route">${routeHtml}</div>
+    `;
+  });
 
-function routeBlock(group, vertical){
-  const points = group.points.map((p, i) => {
-    const node = `<div class="route-node">${nodeHTML(p, group.expected)}</div>`;
-    let connector = '';
-    if (i < group.points.length - 1) {
-      connector = i === group.turnIndex
-        ? `<div class="route-connector turn">${TURN}<span>Da la vuelta</span></div>`
-        : `<div class="route-connector">${ARROW}<span>~8 min</span></div>`;
-    }
-    return node + connector;
-  }).join('');
-  return `
-    <section class="block">
-      <div class="block-title"><h3>${group.title}</h3><span>${group.subtitle}</span></div>
-      <div class="panel">
-        <div class="route ${vertical ? 'vertical' : ''}">${points}</div>
-      </div>
-    </section>`;
-}
-
-function renderAll(){
-  renderFixedPosts();
-  renderPerimeter();
-  document.getElementById('floorRoutes').innerHTML = floorRoutes.map(g => routeBlock(g, false)).join('');
-  document.getElementById('towerRoutes').innerHTML = towerRoutes.map(g => routeBlock(g, true)).join('');
+  document.getElementById('dashboard-content').innerHTML = html;
 }
 
 function tickClock(){
   document.getElementById('clock').textContent = new Date().toLocaleTimeString('es-PE', { hour12:false });
 }
 
-renderAll();
+renderAgents();
+renderDashboard();
 tickClock();
 setInterval(tickClock, 1000);
-setInterval(renderAll, 1000);
+// Actualizar la vista cada minuto para refrescar los tiempos
+setInterval(renderDashboard, 60000);
 </script>
 </body>
 </html>
